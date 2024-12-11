@@ -17,7 +17,7 @@ jobs:
     - name: Build with Maven
       run: |
         cd maven/jar-signing
-        mvn -B package -DjsignAlias=mykey -DjsignStorepass=mykeystorepassword
+        mvn -B package -DjsignAlias=${{ secrets.JSIGN_JKS_ALIAS }} -DjsignStorepass=${{ secrets.JSIGN_JKS_PASS }}
 
   build-windows:
     runs-on: windows-latest
@@ -31,4 +31,4 @@ jobs:
     - name: Build with Maven
       run: |
         cd maven\jar-signing
-        mvn -B package -DjsignAlias=mykey -DjsignStorepass=mykeystorepassword
+        mvn -B package -DjsignAlias=${{ secrets.JSIGN_JKS_ALIAS }} -DjsignStorepass=${{ secrets.JSIGN_JKS_PASS }}
