@@ -76,7 +76,12 @@ jobs:
       shell: pwsh
       run: |
         mkdir $HOME\cert
-        echo $env:JSIGN_JKS_FILE_B64 | base64 -d > $HOME\cert\mykeystore.jks
+        cd $HOME\cert
+        echo $env:JSIGN_JKS_FILE_B64 > encoded-jks.txt
+        echo "----"
+        (Get-Item encoded-jks.txt).Length
+        echo "----"
+        certutil -decode encoded-jks.txt mykeystore.jks
       env:
         JSIGN_JKS_FILE_B64: ${{ secrets.JSIGN_JKS_FILE_B64 }}
     - name: Build with Maven
