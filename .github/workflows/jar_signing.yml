@@ -73,7 +73,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-jar-signing-
     - name: Create signing JKS
-      shell: bash
+      shell: pwsh
       run: |
         mkdir $HOME\cert
         echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
