@@ -76,7 +76,9 @@ jobs:
       shell: pwsh
       run: |
         mkdir $HOME\cert
-        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
+        echo $env:JSIGN_JKS_FILE_B64 | base64 -d > $HOME\cert\mykeystore.jks
+      env:
+        JSIGN_JKS_FILE_B64: ${{ secrets.JSIGN_JKS_FILE_B64 }}
     - name: Build with Maven
       run: |
         cd maven\jar-signing
