@@ -1,0 +1,32 @@
+name: Jar Signing
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+    - name: Build with Maven
+      run: |
+        cd maven/jar-signing
+        mvn -B package -DjsignAlias=mykey -DjsignStorepass=mykeystorepassword
+
+  build-windows:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+    - name: Build with Maven
+      run: |
+        cd maven/jar-signing
+        mvn -B package -DjsignAlias=mykey -DjsignStorepass=mykeystorepassword
