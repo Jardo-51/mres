@@ -82,4 +82,7 @@ jobs:
         cd maven\jar-signing
         mvn -B package
     - name: Sign Jar
-      run: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.5-11\x64\bin\jarsigner.exe -keystore C:\Users\runneradmin\cert\mykeystore.jks -storepass mykeystorepassword D:\a\mres\mres\maven\jar-signing\target\jar-signing-0.0.1-SNAPSHOT.jar mykey
+      run: |
+        echo "Home: $HOME"
+        dir $HOME\cert
+        C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.5-11\x64\bin\jarsigner.exe -keystore C:\Users\runneradmin\cert\mykeystore.jks -storepass mykeystorepassword D:\a\mres\mres\maven\jar-signing\target\jar-signing-0.0.1-SNAPSHOT.jar mykey
