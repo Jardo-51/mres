@@ -21,7 +21,7 @@ jobs:
         key: ${{ runner.os }}-maven-jar-signing-${{ hashFiles('maven/jar-signing/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-jar-signing-
-     - name: Create signing JKS
+    - name: Create signing JKS
       run: |
         mkdir $HOME/cert
         echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME/cert/mykeystore.jks
@@ -46,11 +46,11 @@ jobs:
         key: ${{ runner.os }}-maven-jar-signing-${{ hashFiles('maven/jar-signing/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-jar-signing-
-      - name: Create signing JKS
-        shell: bash
-        run: |
-          mkdir $HOME\cert
-          echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
+    - name: Create signing JKS
+      shell: bash
+      run: |
+        mkdir $HOME\cert
+        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
     - name: Build with Maven
       run: |
         cd maven\jar-signing
