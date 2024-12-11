@@ -55,3 +55,31 @@ jobs:
       run: |
         cd maven\jar-signing
         mvn -B package -PsignJar -DjsignAlias=${{ secrets.JSIGN_JKS_ALIAS }} -DjsignStorepass=${{ secrets.JSIGN_JKS_PASS }}
+
+  build-windows-explicit-sign:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'zulu'
+    - name: Cache local Maven repository
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-jar-signing-${{ hashFiles('maven/jar-signing/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-jar-signing-
+    - name: Create signing JKS
+      shell: bash
+      run: |
+        mkdir $HOME\cert
+        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
+    - name: Build with Maven
+      run: |
+        cd maven\jar-signing
+        mvn -B package
+    - name: Sign Jar
+      run: C:\hostedtoolcache\windows\Java_Zulu_jdk\21.0.5-11\x64\bin\jarsigner.exe -keystore C:\Users\runneradmin\cert\mykeystore.jks -storepass ${{ secrets.JSIGN_JKS_PASS }} -J-Dfile.encoding=UTF-8 D:\a\mres\mres\maven\jar-signing\target\jar-signing-0.0.1-SNAPSHOT.jar ${{ secrets.JSIGN_JKS_ALIAS }}
