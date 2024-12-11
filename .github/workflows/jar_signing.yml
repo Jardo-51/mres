@@ -23,8 +23,7 @@ jobs:
           ${{ runner.os }}-maven-jar-signing-
     - name: Create signing JKS
       run: |
-        mkdir $HOME/cert
-        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME/cert/mykeystore.jks
+        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > maven/jar-signing/mykeystore.jks
     - name: Build with Maven
       run: |
         cd maven/jar-signing
@@ -49,8 +48,7 @@ jobs:
     - name: Create signing JKS
       shell: bash
       run: |
-        mkdir $HOME\cert
-        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > $HOME\cert\mykeystore.jks
+        echo "${{ secrets.JSIGN_JKS_FILE_B64 }}" | base64 -d > maven\jar-signing\mykeystore.jks
     - name: Build with Maven
       run: |
         cd maven\jar-signing
