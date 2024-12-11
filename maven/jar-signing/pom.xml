@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -22,26 +23,35 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>sign</id>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<keystore>${user.home}${file.separator}cert${file.separator}mykeystore.jks</keystore>
-					<storepass>${jsignStorepass}</storepass>
-					<alias>${jsignAlias}</alias>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>signJar</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<keystore>${user.home}${file.separator}cert${file.separator}mykeystore.jks</keystore>
+							<storepass>${jsignStorepass}</storepass>
+							<alias>${jsignAlias}</alias>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
